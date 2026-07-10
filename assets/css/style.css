@@ -1,0 +1,455 @@
+/* ==========================================================================
+   CRISLAN MASSOTERAPEUTA — Estilos Globais
+   Mobile First | Paleta: Azul (#006BFF) / Preto (#0B0B0B) / Branco
+   ========================================================================== */
+
+:root {
+    --azul-principal: #006BFF;
+    --azul-escuro: #003A7A;
+    --azul-claro: #00A8FF;
+    --preto: #0B0B0B;
+    --cinza: #1F1F1F;
+    --branco: #FFFFFF;
+    --font-title: 'Bebas Neue', sans-serif;
+    --font-body: 'Poppins', sans-serif;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.08);
+    --transition: all 0.3s ease;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-body);
+    color: var(--preto);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+a {
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.section-padding {
+    padding: 60px 0;
+}
+
+.bg-light-soft {
+    background-color: #F7F9FC;
+}
+
+.bg-dark-gradient {
+    background: linear-gradient(135deg, var(--preto), var(--azul-escuro));
+}
+
+.text-gradient {
+    background: linear-gradient(135deg, var(--azul-principal), var(--azul-claro));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.section-label {
+    display: inline-block;
+    color: var(--azul-principal);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 1.5px;
+    margin-bottom: 8px;
+}
+
+.section-title {
+    font-family: var(--font-title);
+    font-size: 2rem;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+}
+
+/* ============ NAVBAR ============ */
+.navbar {
+    transition: var(--transition);
+    z-index: 1030;
+}
+
+.navbar .brand-text {
+    font-family: var(--font-title);
+    font-size: 1.6rem;
+    color: var(--azul-principal);
+    letter-spacing: 1px;
+}
+
+.navbar .nav-link {
+    font-weight: 500;
+    color: var(--preto);
+    position: relative;
+}
+
+.navbar .nav-link:hover {
+    color: var(--azul-principal);
+}
+
+/* ============ HERO ============ */
+.hero-section {
+    padding: 140px 0 80px;
+    background: linear-gradient(180deg, #F7F9FC 0%, #FFFFFF 100%);
+    min-height: 90vh;
+}
+
+.badge-hero {
+    background: rgba(0, 107, 255, 0.1);
+    color: var(--azul-principal);
+    padding: 8px 18px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.hero-title {
+    font-family: var(--font-title);
+    font-size: 2.5rem;
+    line-height: 1.15;
+    letter-spacing: 0.5px;
+}
+
+.hero-subtitle {
+    font-size: 1.05rem;
+    color: #555;
+    max-width: 500px;
+}
+
+.hero-image-wrapper {
+    position: relative;
+}
+
+.hero-image {
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-soft);
+    position: relative;
+    z-index: 2;
+}
+
+.hero-shape {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--azul-principal), var(--azul-claro));
+    border-radius: var(--radius-lg);
+    z-index: 1;
+    opacity: 0.15;
+}
+
+/* ============ BOTÕES ============ */
+.btn-primary {
+    background-color: var(--azul-principal);
+    border-color: var(--azul-principal);
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.btn-primary:hover, .btn-primary:focus {
+    background-color: var(--azul-escuro);
+    border-color: var(--azul-escuro);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 107, 255, 0.3);
+}
+
+.btn-outline-success {
+    border-color: #25D366;
+    color: #25D366;
+}
+
+.btn-outline-success:hover {
+    background-color: #25D366;
+    border-color: #25D366;
+}
+
+/* ============ SOBRE ============ */
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    font-weight: 500;
+}
+
+.feature-item i {
+    font-size: 1.3rem;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 107, 255, 0.1);
+    border-radius: 50%;
+}
+
+/* ============ SERVIÇOS ============ */
+.service-card {
+    background: #fff;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-soft);
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+}
+
+.service-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+}
+
+.service-image {
+    height: 200px;
+    overflow: hidden;
+}
+
+.service-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition);
+}
+
+.service-card:hover .service-image img {
+    transform: scale(1.08);
+}
+
+.service-placeholder {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #F0F4F9;
+    color: var(--azul-principal);
+    font-size: 2.5rem;
+}
+
+.service-body {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.service-meta {
+    font-size: 0.85rem;
+    color: #777;
+}
+
+.service-price {
+    font-weight: 700;
+    color: var(--azul-principal);
+    font-size: 1.1rem;
+}
+
+/* ============ BENEFÍCIOS ============ */
+.benefit-icon {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 168, 255, 0.15);
+    border-radius: 50%;
+    font-size: 1.8rem;
+    color: var(--azul-claro);
+}
+
+/* ============ DEPOIMENTOS ============ */
+.testimonial-card {
+    background: #F7F9FC;
+    padding: 30px;
+    border-radius: var(--radius-md);
+    transition: var(--transition);
+}
+
+.testimonial-card:hover {
+    box-shadow: var(--shadow-soft);
+}
+
+/* ============ GALERIA ============ */
+.gallery-item {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    aspect-ratio: 1 / 1;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition);
+}
+
+.gallery-item:hover img {
+    transform: scale(1.1);
+}
+
+/* ============ CONTATO ============ */
+.contact-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--preto);
+    font-weight: 500;
+}
+
+.contact-link i {
+    color: var(--azul-principal);
+    font-size: 1.2rem;
+}
+
+.map-wrapper iframe {
+    width: 100%;
+    height: 350px;
+    border: 0;
+}
+
+/* ============ CTA FINAL ============ */
+.cta-final {
+    background: linear-gradient(135deg, var(--azul-principal), var(--azul-escuro));
+}
+
+/* ============ RODAPÉ ============ */
+.footer-crislan {
+    background-color: var(--preto);
+}
+
+.footer-links li {
+    margin-bottom: 8px;
+}
+
+.footer-links a {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.footer-links a:hover {
+    color: var(--azul-claro);
+}
+
+.social-icon {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    color: #fff;
+    font-size: 1.2rem;
+}
+
+.social-icon:hover {
+    background: var(--azul-principal);
+    color: #fff;
+}
+
+/* ============ WHATSAPP FLUTUANTE ============ */
+.whatsapp-float {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 60px;
+    height: 60px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 1.8rem;
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+    z-index: 1000;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.5); }
+    70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+}
+
+/* ============ AGENDAMENTO (wizard) ============ */
+.service-option {
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.service-option:hover {
+    border-color: var(--azul-principal) !important;
+    background: rgba(0, 107, 255, 0.03);
+}
+
+.slot-btn {
+    min-width: 70px;
+}
+
+/* ==========================================================================
+   RESPONSIVIDADE — Mobile First (breakpoints crescentes)
+   ========================================================================== */
+
+/* 375px+ */
+@media (min-width: 375px) {
+    .hero-title { font-size: 2.7rem; }
+}
+
+/* 425px+ */
+@media (min-width: 425px) {
+    .section-padding { padding: 70px 0; }
+}
+
+/* 768px+ (tablet) */
+@media (min-width: 768px) {
+    .hero-section { padding: 160px 0 100px; }
+    .hero-title { font-size: 3.2rem; }
+    .section-title { font-size: 2.5rem; }
+    .section-padding { padding: 90px 0; }
+}
+
+/* 1024px+ (desktop pequeno) */
+@media (min-width: 1024px) {
+    .hero-title { font-size: 3.6rem; }
+    .hero-section { min-height: 85vh; }
+}
+
+/* 1366px+ (desktop) */
+@media (min-width: 1366px) {
+    .container { max-width: 1240px; }
+}
+
+/* 1920px+ (telas grandes) */
+@media (min-width: 1920px) {
+    .container { max-width: 1400px; }
+    .hero-title { font-size: 4rem; }
+}
+
+/* Acessibilidade: reduz animações para quem prefere */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Foco visível para navegação por teclado */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+    outline: 3px solid var(--azul-claro);
+    outline-offset: 2px;
+}

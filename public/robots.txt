@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /config/
+Disallow: /database/
+Disallow: /app/
+
+Sitemap: https://crislanmassoterapia.infinityfreeapp.com/sitemap.xml
