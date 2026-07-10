@@ -9,8 +9,18 @@ $router->post('agendamento/horarios-disponiveis', 'AppointmentController@availab
 $router->post('agendamento/salvar', 'AppointmentController@store');
 $router->get('agendamento/sucesso', 'AppointmentController@success');
 
-// ---------- Área Administrativa (Fase 2) ----------
+// ---------- Autenticação Admin ----------
 $router->get('admin/login', 'Admin\AuthController@showLogin');
 $router->post('admin/login', 'Admin\AuthController@login');
 $router->get('admin/logout', 'Admin\AuthController@logout');
+
+// ---------- Dashboard ----------
 $router->get('admin/dashboard', 'Admin\DashboardController@index');
+
+// ---------- Agenda ----------
+$router->get('admin/agenda', 'Admin\AgendaController@index');
+$router->post('admin/agenda/status', 'Admin\AgendaController@updateStatus');
+$router->post('admin/agenda/excluir', 'Admin\AgendaController@delete');
+$router->post('admin/agenda/bloquear-data', 'Admin\AgendaController@blockDate');
+$router->post('admin/agenda/desbloquear-data', 'Admin\AgendaController@unblockDate');
+$router->post('admin/agenda/bloquear-horario', 'Admin\AgendaController@blockHour');

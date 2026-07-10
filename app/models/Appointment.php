@@ -106,3 +106,106 @@ class Appointment extends Model
         return $settings;
     }
 }
+
+public function getByDate(string $date): array
+{
+    $stmt = $this->db->prepare(
+        "SELECT a.*, c.name AS client_name, c.phone AS client_phone, 
+                s.name AS service_name, s.duration_minutes
+         FROM appointments a
+         JOIN clients c ON c.id = a.client_id
+         JOIN services s ON s.id = a.service_id
+         WHERE a.appointment_date = :date
+         ORDER BY a.appointment_time ASC"
+    );
+    $stmt->execute(['date' => $date]);
+    return $stmt->fetchAll();
+}
+
+/** Agendamentos de um intervalo (usado na visão semanal/mensal) */
+public function getByRange(string $start, string $end): array
+{
+    $stmt = $this->db->prepare(
+        "SELECT a.*, c.name AS client_name, s.name AS service_name
+         FROM appointments a
+         JOIN clients c ON c.id = a.client_id
+         JOIN services s ON s.id = a.service_id
+         WHERE a.appointment_date BETWEEN :start AND :end
+         ORDER BY a.appointment_date ASC, a.appointment_time ASC"
+    );
+    $stmt->execute(['start' => $start, 'end' => $end]);
+    return $stmt->fetchAll();
+}
+
+public function countToday(): int
+{
+    $stmt = $this->db->prepare(
+        "SELECT COUNT(*) as total FROM appointments 
+         WHERE appointment_date = CURDATE() AND status != 'cancelado'"
+    );
+    $stmt->execute();
+    return (int) $stmt->fetch()['total'];
+}
+
+public function getNext(): ?array
+{
+    $stmt = $this->db->prepare(
+        "SELECT a.*, c.name AS client_name, s.name AS service_name
+         FROM appointments a
+         JOIN clients c ON c.id = a.client_id
+         JOIN services s ON s.id = a.service_id
+         WHERE (a.appointment_date > CURDATE() 
+                OR (a.appointment_date = CURDATE() AND a.appointment_time >= CURTIME()))
+           AND a.status != 'cancelado'
+         ORDER BY a.appointment_date ASC, a.appointment_time ASC
+         LIMIT 1"
+    );
+    $stmt->execute();
+    $result = $stmt->fetch();
+    return $result ?: null;
+}
+
+public function getMonthlyStats(): array
+{
+    $stmt = $this->db->query(
+        "SELECT DATE_FORMAT(appointment_date, '%Y-%m') as month, COUNT(*) as total
+         FROM appointments
+         WHERE status != 'cancelado'
+         AND appointment_date >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
+         GROUP BY month
+         ORDER BY month ASC"
+    );
+    return $stmt->fetchAll();
+}
+
+public function updateStatus(int $id, string $status): void
+{
+    $allowed = ['pendente', 'confirmado', 'concluido', 'cancelado'];
+    if (!in_array($status, $allowed, true)) {
+        throw new \InvalidArgumentException('Status inválido.');
+    }
+
+    $stmt = $this->db->prepare("UPDATE appointments SET status = :status WHERE id = :id");
+    $stmt->execute(['status' => $status, 'id' => $id]);
+}
+
+public function delete(int $id): void
+{
+    $stmt = $this->db->prepare("DELETE FROM appointments WHERE id = :id");
+    $stmt->execute(['id' => $id]);
+}
+
+public function find(int $id): ?array
+{
+    $stmt = $this->db->prepare(
+        "SELECT a.*, c.name AS client_name, c.phone AS client_phone, s.name as service_name
+         FROM appointments a
+         JOIN clients c ON c.id = a.client_id
+         JOIN services s ON s.id = a.service_id
+         WHERE a.id = :id"
+    );
+    $stmt->execute(['id' => $id]);
+    $result = $stmt->fetch();
+    return $result ?: null;
+}
+
