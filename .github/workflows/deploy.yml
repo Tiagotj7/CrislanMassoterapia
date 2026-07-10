@@ -37,7 +37,6 @@ jobs:
             **/.env
             **/README.md
             **/LICENSE
-            **/database/**
             **/.vscode/**
             **/.idea/**
             **/*.sql
