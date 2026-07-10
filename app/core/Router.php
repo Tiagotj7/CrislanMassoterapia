@@ -1,8 +1,6 @@
 <?php
 namespace App\Core;
 
-use App\Middleware\TenantMiddleware;
-
 class Router
 {
     private array $routes = ['GET' => [], 'POST' => []];
@@ -24,12 +22,6 @@ class Router
         $basePath = trim((string) parse_url(BASE_URL, PHP_URL_PATH), '/');
         if ($basePath !== '' && str_starts_with($path, $basePath)) {
             $path = trim(substr($path, strlen($basePath)), '/');
-        }
-
-        // ---- Resolve o tenant ANTES de rotear (exceto rotas de superadmin) ----
-        $firstSegment = explode('/', $path)[0] ?? '';
-        if ($firstSegment !== 'superadmin') {
-            $path = TenantMiddleware::resolve($path);
         }
 
         foreach ($this->routes[$method] ?? [] as $route) {
