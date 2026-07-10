@@ -1,5 +1,8 @@
 <?php require ROOT_PATH . '/app/views/admin/layouts/header.php'; ?>
-<?php use App\Core\Session; use App\Core\Csrf; ?>
+<?php
+
+use App\Core\Session;
+use App\Core\Csrf; ?>
 
 <div class="d-flex align-items-center justify-content-center vh-100 login-bg">
     <div class="card shadow-lg border-0 p-4" style="max-width: 400px; width: 100%;">
@@ -23,6 +26,10 @@
                 <input type="password" name="password" class="form-control" required>
             </div>
             <button type="submit" class="btn btn-primary w-100">Entrar</button>
+            <!-- Adicionar logo após o botão "Entrar" -->
+            <div class="text-center mt-3">
+                <a href="<?= url('admin/senha/esqueci') ?>" class="small text-muted">Esqueci minha senha</a>
+            </div>
         </form>
     </div>
 </div>

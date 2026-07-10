@@ -43,3 +43,19 @@ $currentPath = trim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
         </a>
     </div>
 </nav>
+
+<li class="nav-item">
+    <a class="nav-link <?= str_contains($currentPath, 'depoimentos') ? 'active' : '' ?>" href="<?= url('admin/depoimentos') ?>">
+        <i class="fa-solid fa-star me-2"></i> Depoimentos
+    </a>
+</li>
+<li class="nav-item">
+    <a class="nav-link <?= str_contains($currentPath, 'galeria') ? 'active' : '' ?>" href="<?= url('admin/galeria') ?>">
+        <i class="fa-solid fa-images me-2"></i> Galeria
+    </a>
+</li>
+<li class="nav-item">
+    <a class="nav-link <?= str_contains($currentPath, 'relatorios') ? 'active' : '' ?>" href="<?= url('admin/relatorios') ?>">
+        <i class="fa-solid fa-chart-simple me-2"></i> Relatórios
+    </a>
+</li>

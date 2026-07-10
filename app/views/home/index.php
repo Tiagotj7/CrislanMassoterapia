@@ -42,7 +42,7 @@
                     Alívio de dores, recuperação muscular e bem-estar em um só lugar.
                 </p>
                 <div class="d-flex flex-wrap gap-3">
-                    <a href="<?= url('agendamento') ?>" class="btn btn-primary btn-lg rounded-pill px-4">
+                    <a href="<?= tenant_url('agendamento') ?>" class="btn btn-primary btn-lg rounded-pill px-4">
                         <i class="fa-solid fa-calendar-check me-2"></i>Agendar Horário
                     </a>
                     <a href="https://wa.me/<?= e($settings['whatsapp'] ?? '') ?>" target="_blank" rel="noopener" class="btn btn-outline-success btn-lg rounded-pill px-4">
@@ -164,7 +164,7 @@
                             </span>
                             <span class="service-price">R$ <?= number_format($service['price'], 2, ',', '.') ?></span>
                         </div>
-                        <a href="<?= url('agendamento') ?>" class="btn btn-primary w-100 rounded-pill mt-3">
+                        <a href="<?= tenant_url('agendamento') ?>" class="btn btn-primary w-100 rounded-pill mt-3">
                             Agendar
                         </a>
                     </div>
@@ -283,7 +283,7 @@
                     </span>
                 </div>
 
-                <a href="<?= url('agendamento') ?>" class="btn btn-primary btn-lg rounded-pill mt-4 px-5">
+                <a href="<?= tenant_url('agendamento') ?>" class="btn btn-primary btn-lg rounded-pill mt-4 px-5">
                     Agendar Agora
                 </a>
             </div>
@@ -303,7 +303,7 @@
     <div class="container py-5">
         <h2 class="fw-bold mb-3">Pronto para cuidar do seu corpo?</h2>
         <p class="mb-4">Agende agora e garanta seu horário</p>
-        <a href="<?= url('agendamento') ?>" class="btn btn-light btn-lg rounded-pill px-5 fw-bold">
+        <a href="<?= tenant_url('agendamento') ?>" class="btn btn-light btn-lg rounded-pill px-5 fw-bold">
             Agendar Horário
         </a>
     </div>

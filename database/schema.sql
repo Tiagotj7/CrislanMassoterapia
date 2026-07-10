@@ -118,3 +118,8 @@ INSERT INTO services (name, description, duration_minutes, price, active) VALUES
 
 -- Usuário admin padrão (gerar hash com password_hash('SUASENHA', PASSWORD_DEFAULT))
 -- INSERT INTO users (name, email, password) VALUES ('Crislan', 'admin@crislan.com', '$2y$10$HASH_AQUI');
+ALTER TABLE users 
+    ADD COLUMN security_question VARCHAR(255) DEFAULT NULL,
+    ADD COLUMN security_answer_hash VARCHAR(255) DEFAULT NULL,
+    ADD COLUMN reset_token VARCHAR(64) DEFAULT NULL,
+    ADD COLUMN reset_token_expires DATETIME DEFAULT NULL;

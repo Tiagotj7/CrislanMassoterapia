@@ -49,3 +49,33 @@ $router->post('admin/configuracoes/atualizar', 'Admin\SettingController@update')
 // ---------- Relatórios ----------
 $router->get('admin/relatorios', 'Admin\ReportController@index');
 $router->get('admin/relatorios/exportar', 'Admin\ReportController@exportCsv');
+
+// ---------- Depoimentos ----------
+$router->get('admin/depoimentos', 'Admin\TestimonialController@index');
+$router->get('admin/depoimentos/novo', 'Admin\TestimonialController@create');
+$router->post('admin/depoimentos/salvar', 'Admin\TestimonialController@store');
+$router->post('admin/depoimentos/excluir', 'Admin\TestimonialController@destroy');
+$router->post('admin/depoimentos/status', 'Admin\TestimonialController@toggleStatus');
+
+// ---------- Galeria ----------
+$router->get('admin/galeria', 'Admin\GalleryController@index');
+$router->get('admin/galeria/novo', 'Admin\GalleryController@create');
+$router->post('admin/galeria/salvar', 'Admin\GalleryController@store');
+$router->post('admin/galeria/excluir', 'Admin\GalleryController@destroy');
+
+// ---------- Recuperação de Senha ----------
+$router->get('admin/senha/esqueci', 'Admin\PasswordRecoveryController@showForgotForm');
+$router->post('admin/senha/buscar', 'Admin\PasswordRecoveryController@findQuestion');
+$router->get('admin/senha/pergunta', 'Admin\PasswordRecoveryController@showQuestionForm');
+$router->post('admin/senha/verificar', 'Admin\PasswordRecoveryController@verifyAnswer');
+$router->get('admin/senha/redefinir', 'Admin\PasswordRecoveryController@showResetForm');
+$router->post('admin/senha/atualizar', 'Admin\PasswordRecoveryController@resetPassword');
+
+// ---------- Super Admin (Impact) ----------
+$router->get('superadmin/login', 'SuperAdmin\AuthController@showLogin');
+$router->post('superadmin/login', 'SuperAdmin\AuthController@login');
+$router->get('superadmin/logout', 'SuperAdmin\AuthController@logout');
+$router->get('superadmin/tenants', 'SuperAdmin\TenantController@index');
+$router->get('superadmin/tenants/novo', 'SuperAdmin\TenantController@create');
+$router->post('superadmin/tenants/salvar', 'SuperAdmin\TenantController@store');
+$router->post('superadmin/tenants/status', 'SuperAdmin\TenantController@toggleActive');

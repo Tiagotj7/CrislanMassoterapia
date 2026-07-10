@@ -1,42 +1,35 @@
 <?php
 namespace App\Core;
 
-/**
- * Roteador simples com suporte a parâmetros dinâmicos {id}.
- * Não depende de bibliotecas externas (compatível com InfinityFree).
- */
+use App\Middleware\TenantMiddleware;
+
 class Router
 {
     private array $routes = ['GET' => [], 'POST' => []];
 
-    public function get(string $uri, string $action): void
-    {
-        $this->add('GET', $uri, $action);
-    }
-
-    public function post(string $uri, string $action): void
-    {
-        $this->add('POST', $uri, $action);
-    }
+    public function get(string $uri, string $action): void { $this->add('GET', $uri, $action); }
+    public function post(string $uri, string $action): void { $this->add('POST', $uri, $action); }
 
     private function add(string $method, string $uri, string $action): void
     {
         $uri = trim($uri, '/');
         $pattern = preg_replace('#\{[a-zA-Z_]+\}#', '([^/]+)', $uri);
-        $this->routes[$method][] = [
-            'pattern' => '#^' . $pattern . '$#',
-            'action'  => $action,
-        ];
+        $this->routes[$method][] = ['pattern' => '#^' . $pattern . '$#', 'action' => $action];
     }
 
     public function dispatch(string $method, string $requestUri): void
     {
         $path = trim((string) parse_url($requestUri, PHP_URL_PATH), '/');
 
-        // Remove subpasta base, caso o projeto esteja em um subdiretório
         $basePath = trim((string) parse_url(BASE_URL, PHP_URL_PATH), '/');
         if ($basePath !== '' && str_starts_with($path, $basePath)) {
             $path = trim(substr($path, strlen($basePath)), '/');
+        }
+
+        // ---- Resolve o tenant ANTES de rotear (exceto rotas de superadmin) ----
+        $firstSegment = explode('/', $path)[0] ?? '';
+        if ($firstSegment !== 'superadmin') {
+            $path = TenantMiddleware::resolve($path);
         }
 
         foreach ($this->routes[$method] ?? [] as $route) {
@@ -55,18 +48,12 @@ class Router
         [$controllerName, $methodName] = explode('@', $action);
         $controllerClass = "App\\Controllers\\{$controllerName}";
 
-        if (!class_exists($controllerClass)) {
+        if (!class_exists($controllerClass) || !method_exists($controllerClass, $methodName)) {
             $this->notFound();
             return;
         }
 
         $controller = new $controllerClass();
-
-        if (!method_exists($controller, $methodName)) {
-            $this->notFound();
-            return;
-        }
-
         call_user_func_array([$controller, $methodName], $params);
     }
 

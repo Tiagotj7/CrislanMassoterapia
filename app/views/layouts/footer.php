@@ -15,7 +15,7 @@
                         <li><a href="#sobre">Sobre</a></li>
                         <li><a href="#servicos">Serviços</a></li>
                         <li><a href="#depoimentos">Depoimentos</a></li>
-                        <li><a href="<?= url('agendamento') ?>">Agendar</a></li>
+                        <li><a href="<?= tenant_url('agendamento') ?>">Agendar</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-4">

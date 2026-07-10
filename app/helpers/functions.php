@@ -35,3 +35,11 @@ function csrf_field(): string
 {
     return \App\Core\Csrf::field();
 }
+
+/** Gera URLs já incluindo o slug do tenant atual automaticamente */
+function tenant_url(string $path = ''): string
+{
+    $slug = \App\Core\Tenant::isLoaded() ? \App\Core\Tenant::slug() : '';
+    $path = ltrim($path, '/');
+    return BASE_URL . '/' . $slug . ($path ? '/' . $path : '');
+}

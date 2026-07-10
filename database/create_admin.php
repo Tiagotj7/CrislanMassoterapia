@@ -1,6 +1,5 @@
 <?php
 require __DIR__ . '/../config/config.php';
-require __DIR__ . '/../config/database.php';
 
 $config = require __DIR__ . '/../config/database.php';
 $pdo = new PDO(
@@ -11,12 +10,18 @@ $pdo = new PDO(
 
 $name = 'Crislan';
 $email = 'admin@crislan.com';
-$password = 'masso123.,'; // TROCAR antes de rodar
+$password = 'Masso123.,'; // TROCAR antes de rodar
+$securityQuestion = 'Qual o nome do seu primeiro animal de estimação?'; // TROCAR
+$securityAnswer = 'RESPOSTA_SECRETA'; // TROCAR
 
 $hash = password_hash($password, PASSWORD_DEFAULT);
+$answerHash = password_hash(mb_strtolower(trim($securityAnswer)), PASSWORD_DEFAULT);
 
-$stmt = $pdo->prepare("INSERT INTO users (name, email, password) VALUES (?, ?, ?)");
-$stmt->execute([$name, $email, $hash]);
+$stmt = $pdo->prepare(
+    "INSERT INTO users (name, email, password, security_question, security_answer_hash) 
+     VALUES (?, ?, ?, ?, ?)"
+);
+$stmt->execute([$name, $email, $hash, $securityQuestion, $answerHash]);
 
 echo "Usuário admin criado com sucesso! ID: " . $pdo->lastInsertId();
 echo "<br><strong>⚠️ APAGUE ESTE ARQUIVO AGORA!</strong>";
