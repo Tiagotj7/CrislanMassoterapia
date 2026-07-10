@@ -14,6 +14,8 @@ Env::load(ROOT_PATH . '/.env');
 
 define('BASE_URL', rtrim(Env::get('APP_BASE_URL', 'http://localhost'), '/'));
 define('ENVIRONMENT', Env::get('APP_ENV', 'production'));
+// Opcional: ID do tenant padrão para deployments single-tenant (ex: hospedagem sem slug na URL)
+define('DEFAULT_TENANT_ID', Env::get('DEFAULT_TENANT_ID', ''));
 
 if (ENVIRONMENT === 'development') {
     error_reporting(E_ALL);

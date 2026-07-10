@@ -17,8 +17,23 @@ class Tenant
     public static function id(): int
     {
         if (self::$current === null) {
+            // Tentativa de fallback para ambientes single-tenant: carregar por DEFAULT_TENANT_ID
+            if (defined('DEFAULT_TENANT_ID') && DEFAULT_TENANT_ID !== '') {
+                // carregamento tardio do model — autoload está disponível quando chamado durante a requisição
+                $tenantModelClass = '\\App\\Models\\TenantModel';
+                if (class_exists($tenantModelClass)) {
+                    $model = new $tenantModelClass();
+                    $tenant = $model->findById((int) DEFAULT_TENANT_ID);
+                    if ($tenant) {
+                        self::set($tenant);
+                        return (int) $tenant['id'];
+                    }
+                }
+            }
+
             throw new \RuntimeException('Tenant não identificado. Verifique o TenantMiddleware.');
         }
+
         return (int) self::$current['id'];
     }
 
