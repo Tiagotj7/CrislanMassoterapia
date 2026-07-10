@@ -1,12 +1,19 @@
 <?php
 /**
- * Configurações gerais do sistema.
- * Ajustar BASE_URL conforme o domínio final na InfinityFree.
+ * Configurações gerais do sistema, carregadas a partir do .env
  */
 
 define('ROOT_PATH', dirname(__DIR__));
-define('BASE_URL', 'https://seudominio.infinityfreeapp.com'); // sem barra no final
-define('ENVIRONMENT', 'production'); // 'development' durante testes
+
+// Autoload mínimo necessário antes do autoload completo (Env é usado muito cedo)
+require_once ROOT_PATH . '/app/core/Env.php';
+
+use App\Core\Env;
+
+Env::load(ROOT_PATH . '/.env');
+
+define('BASE_URL', rtrim(Env::get('APP_BASE_URL', 'http://localhost'), '/'));
+define('ENVIRONMENT', Env::get('APP_ENV', 'production'));
 
 if (ENVIRONMENT === 'development') {
     error_reporting(E_ALL);

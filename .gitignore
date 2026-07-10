@@ -1,0 +1,10 @@
+/.env
+.env.local
+.env.*.local
+/vendor/
+/node_modules/
+/.vscode/
+/.idea/
+.DS_Store
+/.sass-cache/
+.env.php

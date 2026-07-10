@@ -1,12 +1,14 @@
 <?php
 /**
- * Credenciais do banco MySQL (InfinityFree).
- * Substituir pelos dados exibidos no painel do cPanel da hospedagem.
+ * Credenciais do banco MySQL, lidas do arquivo .env
  */
+
+use App\Core\Env;
+
 return [
-    'host'    => 'sqlXXX.infinityfree.com',
-    'dbname'  => 'epiz_XXXXXXXX_crislan',
-    'user'    => 'epiz_XXXXXXXX',
-    'pass'    => 'SUA_SENHA_AQUI',
-    'charset' => 'utf8mb4',
+    'host'    => Env::get('DB_HOST'),
+    'dbname'  => Env::get('DB_NAME'),
+    'user'    => Env::get('DB_USER'),
+    'pass'    => Env::get('DB_PASS'),
+    'charset' => Env::get('DB_CHARSET', 'utf8mb4'),
 ];
