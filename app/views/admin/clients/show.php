@@ -1,4 +1,8 @@
-<?php require ROOT_PATH . '/app/views/admin/layouts/header.php'; ?>
+<?php
+/** @var array $client */
+/** @var array $history */
+require ROOT_PATH . '/app/views/admin/layouts/header.php';
+?>
 
 <div class="d-flex">
     <?php require ROOT_PATH . '/app/views/admin/layouts/sidebar.php'; ?>

@@ -1,4 +1,7 @@
-<?php require ROOT_PATH . '/app/views/layouts/header.php'; ?>
+<?php
+/** @var array $services */
+require ROOT_PATH . '/app/views/layouts/header.php';
+?>
 
 <main class="container py-5">
     <h1 class="text-center mb-4 fw-bold">Agende seu horário</h1>

@@ -48,6 +48,48 @@ class Service extends Model
         return (int) $this->db->lastInsertId();
     }
 
-    // update(), delete(), toggleStatus(), hasAppointments() seguem o MESMO padrão:
-    // sempre adicionar "AND tenant_id = :tid" no WHERE e passar $this->tenantId() nos parâmetros.
+    public function update(int $id, array $data): bool
+    {
+        $fields = [];
+        $params = ['id' => $id, 'tid' => $this->tenantId()];
+
+        foreach ($data as $k => $v) {
+            $fields[] = "{$k} = :{$k}";
+            $params[$k] = $v;
+        }
+
+        if (empty($fields)) {
+            return false;
+        }
+
+        $sql = 'UPDATE services SET ' . implode(', ', $fields) . ' WHERE id = :id AND tenant_id = :tid';
+        $stmt = $this->db->prepare($sql);
+        return $stmt->execute($params);
+    }
+
+    public function delete(int $id): bool
+    {
+        $stmt = $this->db->prepare('DELETE FROM services WHERE id = :id AND tenant_id = :tid');
+        return $stmt->execute(['id' => $id, 'tid' => $this->tenantId()]);
+    }
+
+    public function toggleStatus(int $id): bool
+    {
+        // Busca status atual
+        $stmt = $this->db->prepare('SELECT active FROM services WHERE id = :id AND tenant_id = :tid');
+        $stmt->execute(['id' => $id, 'tid' => $this->tenantId()]);
+        $row = $stmt->fetch();
+        if (!$row) return false;
+        $new = $row['active'] ? 0 : 1;
+        $stmt = $this->db->prepare('UPDATE services SET active = :active WHERE id = :id AND tenant_id = :tid');
+        return $stmt->execute(['active' => $new, 'id' => $id, 'tid' => $this->tenantId()]);
+    }
+
+    public function hasAppointments(int $id): bool
+    {
+        $stmt = $this->db->prepare('SELECT COUNT(*) as c FROM appointments WHERE service_id = :id AND tenant_id = :tid');
+        $stmt->execute(['id' => $id, 'tid' => $this->tenantId()]);
+        $row = $stmt->fetch();
+        return ($row && $row['c'] > 0);
+    }
 }

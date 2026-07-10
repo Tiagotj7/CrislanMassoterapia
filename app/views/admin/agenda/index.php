@@ -1,4 +1,22 @@
-<?php require ROOT_PATH . '/app/views/admin/layouts/header.php'; ?>
+<?php
+/**
+ * @var string $view          'day' | 'week' | 'month'
+ * @var string $date          Data selecionada (Y-m-d)
+ * @var array  $appointments  Lista de agendamentos do período
+ * @var array  $blockedDates  Lista de datas bloqueadas
+ */
+
+// Defaults defensivos: evita "undefined variable" caso o controller não envie algo
+$view = $view ?? 'day';
+$date = $date ?? date('Y-m-d');
+$appointments = $appointments ?? [];
+$blockedDates = $blockedDates ?? [];
+
+// Número de colunas da tabela varia conforme a view (usado no colspan do "vazio")
+$columnsCount = $view !== 'day' ? 7 : 6;
+
+require ROOT_PATH . '/app/views/admin/layouts/header.php';
+?>
 
 <div class="d-flex">
     <?php require ROOT_PATH . '/app/views/admin/layouts/sidebar.php'; ?>
@@ -8,9 +26,9 @@
             <h2 class="fw-bold mb-0">Agenda</h2>
 
             <div class="btn-group">
-                <a href="?view=day&date=<?= $date ?>" class="btn btn-outline-primary <?= $view === 'day' ? 'active' : '' ?>">Diário</a>
-                <a href="?view=week&date=<?= $date ?>" class="btn btn-outline-primary <?= $view === 'week' ? 'active' : '' ?>">Semanal</a>
-                <a href="?view=month&date=<?= $date ?>" class="btn btn-outline-primary <?= $view === 'month' ? 'active' : '' ?>">Mensal</a>
+                <a href="?view=day&amp;date=<?= e($date) ?>" class="btn btn-outline-primary <?= $view === 'day' ? 'active' : '' ?>">Diário</a>
+                <a href="?view=week&amp;date=<?= e($date) ?>" class="btn btn-outline-primary <?= $view === 'week' ? 'active' : '' ?>">Semanal</a>
+                <a href="?view=month&amp;date=<?= e($date) ?>" class="btn btn-outline-primary <?= $view === 'month' ? 'active' : '' ?>">Mensal</a>
             </div>
 
             <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#blockModal">
@@ -40,32 +58,37 @@
                     </thead>
                     <tbody>
                         <?php foreach ($appointments as $a): ?>
-                        <tr data-id="<?= $a['id'] ?>">
+                        <tr data-id="<?= (int) $a['id'] ?>">
                             <?php if ($view !== 'day'): ?>
-                                <td><?= date('d/m/Y', strtotime($a['appointment_date'])) ?></td>
+                                <td><?= e(date('d/m/Y', strtotime($a['appointment_date']))) ?></td>
                             <?php endif; ?>
-                            <td><?= date('H:i', strtotime($a['appointment_time'])) ?></td>
+                            <td><?= e(date('H:i', strtotime($a['appointment_time']))) ?></td>
                             <td><?= e($a['client_name']) ?></td>
                             <td><?= e($a['client_phone'] ?? '-') ?></td>
                             <td><?= e($a['service_name']) ?></td>
                             <td>
-                                <select class="form-select form-select-sm status-select" data-id="<?= $a['id'] ?>">
-                                    <?php foreach (['pendente','confirmado','concluido','cancelado'] as $status): ?>
-                                        <option value="<?= $status ?>" <?= $a['status'] === $status ? 'selected' : '' ?>>
-                                            <?= ucfirst($status) ?>
+                                <select class="form-select form-select-sm status-select" data-id="<?= (int) $a['id'] ?>">
+                                    <?php foreach (['pendente', 'confirmado', 'concluido', 'cancelado'] as $status): ?>
+                                        <option value="<?= e($status) ?>" <?= $a['status'] === $status ? 'selected' : '' ?>>
+                                            <?= e(ucfirst($status)) ?>
                                         </option>
                                     <?php endforeach; ?>
                                 </select>
                             </td>
                             <td>
-                                <button class="btn btn-sm btn-outline-danger btn-delete" data-id="<?= $a['id'] ?>">
+                                <button class="btn btn-sm btn-outline-danger btn-delete" data-id="<?= (int) $a['id'] ?>">
                                     <i class="fa-solid fa-trash"></i>
                                 </button>
                             </td>
                         </tr>
                         <?php endforeach; ?>
+
                         <?php if (empty($appointments)): ?>
-                        <tr><td colspan="7" class="text-center text-muted py-4">Nenhum agendamento neste período.</td></tr>
+                        <tr>
+                            <td colspan="<?= $columnsCount ?>" class="text-center text-muted py-4">
+                                Nenhum agendamento neste período.
+                            </td>
+                        </tr>
                         <?php endif; ?>
                     </tbody>
                 </table>
@@ -78,10 +101,16 @@
             <ul class="list-group list-group-flush">
                 <?php foreach ($blockedDates as $b): ?>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span><?= date('d/m/Y', strtotime($b['blocked_date'])) ?> — <?= e($b['reason'] ?? 'Sem motivo') ?></span>
-                    <button class="btn btn-sm btn-outline-danger btn-unblock" data-id="<?= $b['id'] ?>">Remover</button>
+                    <span>
+                        <?= e(date('d/m/Y', strtotime($b['blocked_date']))) ?>
+                        — <?= e($b['reason'] ?? 'Sem motivo') ?>
+                    </span>
+                    <button class="btn btn-sm btn-outline-danger btn-unblock" data-id="<?= (int) $b['id'] ?>">
+                        Remover
+                    </button>
                 </li>
                 <?php endforeach; ?>
+
                 <?php if (empty($blockedDates)): ?>
                 <li class="list-group-item text-muted">Nenhuma data bloqueada.</li>
                 <?php endif; ?>

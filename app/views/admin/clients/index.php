@@ -1,5 +1,11 @@
-<?php require ROOT_PATH . '/app/views/admin/layouts/header.php'; ?>
-<?php use App\Core\Session; ?>
+<?php
+/** @var array $clients */
+/** @var string $search */
+/** @var int $totalPages */
+/** @var int $page */
+require ROOT_PATH . '/app/views/admin/layouts/header.php';
+use App\Core\Session;
+?>
 
 <div class="d-flex">
     <?php require ROOT_PATH . '/app/views/admin/layouts/sidebar.php'; ?>

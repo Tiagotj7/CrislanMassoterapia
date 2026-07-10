@@ -1,4 +1,10 @@
-<?php require ROOT_PATH . '/app/views/admin/layouts/header.php'; ?>
+<?php
+/** @var int $todayCount */
+/** @var array|null $nextAppointment */
+/** @var array $weekAppointments */
+/** @var array $monthlyStats */
+require ROOT_PATH . '/app/views/admin/layouts/header.php';
+?>
 
 <div class="d-flex">
     <?php require ROOT_PATH . '/app/views/admin/layouts/sidebar.php'; ?>

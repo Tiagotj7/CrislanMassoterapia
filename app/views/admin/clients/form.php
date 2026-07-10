@@ -1,5 +1,14 @@
-<?php require ROOT_PATH . '/app/views/admin/layouts/header.php'; ?>
-<?php use App\Core\Session; ?>
+<?php
+/**
+ * @var array|null $client  Dados do cliente (null = modo criação, array = modo edição)
+ */
+
+$client = $client ?? null;
+
+require ROOT_PATH . '/app/views/admin/layouts/header.php';
+
+use App\Core\Session;
+?>
 
 <div class="d-flex">
     <?php require ROOT_PATH . '/app/views/admin/layouts/sidebar.php'; ?>
@@ -12,7 +21,10 @@
         <?php endif; ?>
 
         <div class="card border-0 shadow-sm p-4" style="max-width: 600px;">
-            <form method="POST" action="<?= $client ? url('admin/clientes/' . $client['id'] . '/atualizar') : url('admin/clientes/salvar') ?>">
+            <form method="POST"
+                  action="<?= $client
+                        ? url('admin/clientes/' . (int) $client['id'] . '/atualizar')
+                        : url('admin/clientes/salvar') ?>">
                 <?= csrf_field() ?>
 
                 <div class="mb-3">

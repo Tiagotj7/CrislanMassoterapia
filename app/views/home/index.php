@@ -1,4 +1,7 @@
-<?php require ROOT_PATH . '/app/views/layouts/header.php'; ?>
+<?php
+/** @var array $services */
+require ROOT_PATH . '/app/views/layouts/header.php';
+?>
 
 <!-- ========== NAVBAR ========== -->
 <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm py-3" id="mainNavbar">

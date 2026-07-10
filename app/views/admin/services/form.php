@@ -1,5 +1,8 @@
-<?php require ROOT_PATH . '/app/views/admin/layouts/header.php'; ?>
-<?php use App\Core\Session; ?>
+<?php
+/** @var array|null $service */
+require ROOT_PATH . '/app/views/admin/layouts/header.php';
+use App\Core\Session;
+?>
 
 <div class="d-flex">
     <?php require ROOT_PATH . '/app/views/admin/layouts/sidebar.php'; ?>

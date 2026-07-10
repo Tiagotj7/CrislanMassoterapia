@@ -1,5 +1,14 @@
-<?php require ROOT_PATH . '/app/views/admin/layouts/header.php'; ?>
-<?php use App\Core\Session; ?>
+<?php
+/**
+ * @var string $question  Pergunta de segurança cadastrada pelo admin
+ */
+
+$question = $question ?? '';
+
+require ROOT_PATH . '/app/views/admin/layouts/header.php';
+
+use App\Core\Session;
+?>
 
 <div class="d-flex align-items-center justify-content-center vh-100 login-bg">
     <div class="card shadow-lg border-0 p-4" style="max-width: 420px; width: 100%;">

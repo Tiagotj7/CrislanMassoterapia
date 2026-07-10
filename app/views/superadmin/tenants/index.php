@@ -1,4 +1,7 @@
-<?php require ROOT_PATH . '/app/views/admin/layouts/header.php'; ?>
+<?php
+/** @var array $tenants */
+require ROOT_PATH . '/app/views/admin/layouts/header.php';
+?>
 <?php use App\Core\Session; ?>
 
 <div class="p-4">

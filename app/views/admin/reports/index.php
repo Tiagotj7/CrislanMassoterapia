@@ -1,4 +1,11 @@
-<?php require ROOT_PATH . '/app/views/admin/layouts/header.php'; ?>
+<?php
+/** @var string $startDate */
+/** @var string $endDate */
+/** @var array $summary */
+/** @var array $topServices */
+/** @var array $topClients */
+require ROOT_PATH . '/app/views/admin/layouts/header.php';
+?>
 
 <div class="d-flex">
     <?php require ROOT_PATH . '/app/views/admin/layouts/sidebar.php'; ?>
